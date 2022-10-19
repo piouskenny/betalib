@@ -1,0 +1,26 @@
+li {
+    list-style: none;
+}
+
+ul {
+    list-style: none;
+}
+
+.slogan {
+    display: block;
+    font-size: 30px;
+    font-weight: lighter;
+}
+
+.hero-image {
+    height: 300px;
+    width: 360px;
+}
+
+.hero-lib {
+    border-radius: 20px;
+}
+
+.brand-name {
+    font-weight: 600;
+}
