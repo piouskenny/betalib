@@ -17,3 +17,5 @@ Route::post('/store', [UserController::class, 'store'])->name('store');
 Route::post('/check', [UserController::class, 'check'])->name('check');
 
 Route::get('logout', [UserController::class, 'logout'])->name('logout');
+
+Route::get('profile', [UserController::class, 'profile'])->name('profile');

@@ -105,9 +105,16 @@ class UserController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function profile()
     {
-        //
+        if(!session()->has('LoggedUser')) {
+            return redirect('login');
+        } elseif(session()->has('LoggedUser')) {
+            $user = User::where('id', '=', session('LoggedUser'))->first();
+            $data = ['LoggedUserInfo' => $user,];
+        }
+
+        return view('users.profile', $data);
     }
 
     /**
