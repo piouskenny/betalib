@@ -48,7 +48,7 @@
             <nav class="sidebar sidebar-offcanvas" id="sidebar">
                 <ul class="nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="">
+                        <a class="nav-link" href="{{ route('index') }}">
                             <i class="icon-grid menu-icon"></i>
                             <span class="menu-title">Home</span>
                         </a>
@@ -62,8 +62,7 @@
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" data-toggle="collapse" href="#auth" href="{{ route('profile') }}" aria-expanded="false"
-                            aria-controls="auth">
+                        <a class="nav-link" href="{{ route('profile') }}">
                             <i class="icon-head menu-icon"></i>
                             <span class="menu-title">Profile</span>
                         </a>
