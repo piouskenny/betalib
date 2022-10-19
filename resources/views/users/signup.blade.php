@@ -13,6 +13,7 @@
                         <form class="pt-3" method="POST" action="{{ route('store') }}">
                             @csrf
                             @method('post')
+
                             <div class="form-group">
                                 <input type="text" class="form-control form-control-sm" id="exampleInputUsername1"
                                     placeholder="Username" name="username" value="{{ old('username') }}">
@@ -58,6 +59,7 @@
                                     name="country">
                                     <option hidden value="">Country</option>
                                     <option value="nigeria">Nigeria</option>
+                                    <option value="Ghana">Ghana</option>
                                     <option value="United State">United States of America</option>
                                     <option value="United Kingdom">United Kingdom</option>
                                     <option value="India">India</option>
@@ -93,7 +95,7 @@
                                     UP</button>
                             </div>
                             <div class="text-center mt-4 font-weight-light">
-                                Already have an account? <a href="login.html" class="text-primary">Login</a>
+                                Already have an account? <a href="{{ route('login') }}" class="text-primary">Login</a>
                             </div>
                         </form>
                     </div>

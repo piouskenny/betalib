@@ -30,14 +30,14 @@
                         </a>
                         <div class="dropdown-menu dropdown-menu-right navbar-dropdown"
                             aria-labelledby="profileDropdown">
-                            <a class="dropdown-item">
+                            <a class="dropdown-item" href="{{ route('logout') }}">
                                 <i class="ti-power-off text-primary"></i>
                                 Logout
                             </a>
                         </div>
                     </li>
                     <h1 class="text-center h4 mt-4">
-                        <b>Firstname Lastname</b>
+                        <b>{{ $LoggedUserInfo->firstname }} {{ $LoggedUserInfo->lastname }}</b>
                     </h1>
                 </ul>
 
@@ -56,7 +56,7 @@
 
                     <li class="nav-item">
                         <a class="nav-link" href="">
-                            <i class="icon-grid menu-icon"></i>
+                            <i class="icon-book menu-icon"></i>
                             <span class="menu-title">My Library</span>
                         </a>
                     </li>
@@ -65,15 +65,8 @@
                         <a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false"
                             aria-controls="auth">
                             <i class="icon-head menu-icon"></i>
-                            <span class="menu-title">Account</span>
-                            <i class="menu-arrow"></i>
+                            <span class="menu-title">Profile</span>
                         </a>
-                        <div class="collapse" id="auth">
-                            <ul class="nav flex-column sub-menu">
-                                <li class="nav-item"> <a class="nav-link" href="{{ route('login') }}"> Login </a></li>
-                                <li class="nav-item"> <a class="nav-link" href="{{ route('signup') }}"> Register </a></li>
-                            </ul>
-                        </div>
                     </li>
                 </ul>
             </nav>

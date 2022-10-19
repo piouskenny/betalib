@@ -15,7 +15,13 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view('index');
+        if(!session()->has('LoggedUser')) {
+            return redirect('login');
+        } elseif(session()->has('LoggedUser')) {
+            $user = User::where('id', '=', session('LoggedUser'))->first();
+            $data = ['LoggedUserInfo' => $user,];
+        }
+        return view('index', $data);
     }
 
     /**
@@ -44,10 +50,10 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'username' => 'required|string',
+            'username' => 'required|string|unique:users',
             'firstname' => 'required|string',
-            'lastname' =>'required|string',
-            'email' => 'required|email',
+            'lastname' => 'required|string',
+            'email' => 'required|email|unique:users',
             'country' => 'required|string',
             'password' => 'required|min:7|'
         ]);
@@ -62,10 +68,10 @@ class UserController extends Controller
             'password' => Hash::make($request->password)
         ]);
 
-        
+
 
         return redirect('/login')->with('success', 'create account successfully');
-        
+
         // dd(Hash::make($request->password));
         // dd($request->all());
     }
@@ -81,20 +87,17 @@ class UserController extends Controller
         $user = User::where('email', '=', $request->email)->first();
 
 
-        if($user) {
-            if(Hash::check($request->password, $user->password)){
+        if ($user) {
+            if (Hash::check($request->password, $user->password)) {
                 $request->session()->put('LoggedUser', $user->id);
 
                 return redirect('/');
             } else {
                 return back()->with('failed', 'wrong Password');
             }
-    
         } else {
             return back()->with('failed', 'No Account Found for ' . $request->email);
         }
-
-        
     }
     /**
      * Display the specified resource.
@@ -136,8 +139,11 @@ class UserController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
+    public function logout()
     {
-        //
+        if(session()->has('LoggedUser')) {
+            session()->pull('LoggedUser');
+            return redirect('/login');
+        }
     }
 }

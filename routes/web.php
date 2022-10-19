@@ -15,3 +15,5 @@ Route::get('/login', [UserController::class, 'login'])->name('login');
 Route::post('/store', [UserController::class, 'store'])->name('store');
 
 Route::post('/check', [UserController::class, 'check'])->name('check');
+
+Route::get('logout', [UserController::class, 'logout'])->name('logout');
