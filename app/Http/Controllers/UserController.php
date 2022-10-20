@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Profile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -111,10 +112,13 @@ class UserController extends Controller
             return redirect('login');
         } elseif(session()->has('LoggedUser')) {
             $user = User::where('id', '=', session('LoggedUser'))->first();
-            $data = ['LoggedUserInfo' => $user,];
+            $data = ['LoggedUserInfo' => $user];
         }
 
-        return view('users.profile', $data);
+        $user_info = Profile::where('id', '=', session('LoggedUser'))->first();
+        $user_info_data = ['information' => $user_info];
+
+        return view('users.profile', $data, $user_info_data);
     }
 
     /**
@@ -123,9 +127,16 @@ class UserController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function edit(User $user)
+    public function updateProfile()
     {
-        //
+        if(!session()->has('LoggedUser')) {
+            return redirect('login');
+        } elseif(session()->has('LoggedUser')) {
+            $user = User::where('id', '=', session('LoggedUser'))->first();
+            $data = ['LoggedUserInfo' => $user,];
+        }
+
+        return view('users.update_profile', $data);
     }
 
     /**
@@ -135,9 +146,34 @@ class UserController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update_profile_details(Request $request, User $user)
     {
-        //
+        $id = session('LoggedUser');
+
+        $request->validate([
+            "profile_img" => 'mimes:jpg,png,jpeg|max:6048',
+            "about_me" => 'string',
+            "facebook" => 'string',
+            "twitter" => 'string',
+            "instagram" => 'string',
+        ]);
+
+
+        $newImageName = time() . '-' . $request->instagram . '.' . $request->profile_img->extension();
+
+        $request->profile_img->move(public_path('images/profile_pics'), $newImageName);
+
+
+        $profile = Profile::create([
+            'users_id' => $id,
+            'image_path' => $newImageName,
+            'about' => $request->about_me,
+            'facebook' => $request->facebook,
+            'twitter' => $request->twitter,
+            'instagram' => $request->instagram,
+        ]);
+
+        return redirect('/profile');
     }
 
     /**

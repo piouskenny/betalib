@@ -10,4 +10,9 @@ class User extends Model
     use HasFactory;
 
     protected $fillable = ['username', 'firstname', 'lastname', 'email', 'country', 'password'];
+
+    public function profile(){
+        return $this->hasMany(Profile::class);
+    }
+
 }
