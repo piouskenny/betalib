@@ -15,6 +15,7 @@
             $information = new Details();
         @endphp
     @endif
+    
     <!-- content -->
     <div class="main-panel">
         <div class="content-wrapper">
