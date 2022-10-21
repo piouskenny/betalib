@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Admin;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {
@@ -14,7 +15,14 @@ class AdminController extends Controller
      */
     public function index()
     {
-        //
+        if(!session()->has('LoggedUser')) {
+            return redirect('/bl-admin/login');
+        } elseif(session()->has('LoggedUser')) {
+            $user = Admin::where('id', '=', session('LoggedUser'))->first();
+            $data = ['LoggedUserInfo' => $user,];
+        }
+
+        return view('admin.index', $data);
     }
 
     /**
@@ -24,7 +32,7 @@ class AdminController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.signup');
     }
 
     /**
@@ -33,10 +41,29 @@ class AdminController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+    public function login()
+    {
+        return view('admin.login');
+    }
+
+
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'username' => 'required|string|unique:admins',
+            'email' => 'required|email|unique:admins',
+            'password' => 'required|min:7|'
+        ]);
+
+        $admin = Admin::create([
+            'username' => $request->username,
+            'email' => $request->email,
+            'password' => Hash::make($request->password)
+        ]);
+
+        return redirect('/bl-admin/login')->with('success', 'create account successfully');
     }
+
 
     /**
      * Display the specified resource.
@@ -44,11 +71,27 @@ class AdminController extends Controller
      * @param  \App\Models\Admin  $admin
      * @return \Illuminate\Http\Response
      */
-    public function show(Admin $admin)
+    public function check(Request $request)
     {
-        //
-    }
+        $request->validate([
+            'username' => 'required',
+            'password' => 'required|min:7|'
+        ]);
 
+        $admin = Admin::where('username', '=', $request->username)->first();
+
+
+        if ($admin) {
+            if (Hash::check($request->password, $admin->password)) {
+                $request->session()->put('LoggedUser', $admin->id);
+                return redirect('/bl-admin');
+            } else {
+                return back()->with('failed', 'wrong Password');
+            }
+        } else {
+            return back()->with('failed', 'You are not admin' . $request->username);
+        }
+    }
     /**
      * Show the form for editing the specified resource.
      *

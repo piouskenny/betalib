@@ -23,3 +23,16 @@ Route::get('profile', [UserController::class, 'profile'])->name('profile');
 Route::get('update_profile', [UserController::class, 'updateProfile'])->name('update_profile');
 
 Route::post('update_profile_details', [UserController::class, 'update_profile_details'])->name('update_profile_details');
+
+
+
+// Admin View and functionality
+Route::get('/bl-admin', [AdminController::class, 'index'])->name('bl-admin_index');
+
+Route::get('bl-admin/signup', [AdminController::class, 'create'])->name('bl-admin_signup');
+
+Route::get('bl-admin/login', [AdminController::class, 'login'])->name('bl-admin_login');
+
+Route::post('bl_admin/store', [AdminController::class, 'store'])->name('bl-admin_store');
+
+Route::post('bl_admin/check', [AdminController::class, 'check'])->name('bl-admin_check');
