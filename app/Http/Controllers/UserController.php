@@ -152,10 +152,10 @@ class UserController extends Controller
 
         $request->validate([
             "profile_img" => 'mimes:jpg,png,jpeg|max:6048',
-            "about_me" => 'string',
-            "facebook" => 'string',
-            "twitter" => 'string',
-            "instagram" => 'string',
+            "about" => 'unique:profiles',
+            "facebook" => 'unique:profiles',
+            "twitter" => 'unique:profiles',
+            "instagram" => 'unique:profiles',
         ]);
 
 
@@ -167,7 +167,7 @@ class UserController extends Controller
         $profile = Profile::create([
             'users_id' => $id,
             'image_path' => $newImageName,
-            'about' => $request->about_me,
+            'about' => $request->about,
             'facebook' => $request->facebook,
             'twitter' => $request->twitter,
             'instagram' => $request->instagram,

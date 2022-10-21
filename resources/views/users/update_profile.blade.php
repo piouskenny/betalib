@@ -22,7 +22,7 @@
                         </div>
                         <div class="form-group my-3">
                             <label for="about">About Me</label>
-                            <textarea type="file" name="about_me" id="" class="form-control"> </textarea>
+                            <textarea type="file" name="about" id="" class="form-control"> </textarea>
                             <span class="text-danger">
                                 @error('about_me')
                                     {{ $message }}
