@@ -151,7 +151,7 @@ class UserController extends Controller
         $id = session('LoggedUser');
 
         $request->validate([
-            "profile_img" => 'mimes:jpg,png,jpeg|max:6048',
+            "profile_img" => 'mimes:jpg,png,jpeg|max:4000',
             "about" => 'unique:profiles',
             "facebook" => 'unique:profiles',
             "twitter" => 'unique:profiles',
@@ -163,16 +163,14 @@ class UserController extends Controller
 
         $request->profile_img->move(public_path('images/profile_pics'), $newImageName);
 
-        dd($request->all());
-
-        // $profile = Profile::create([
-        //     'users_id' => $id,
-        //     'image_path' => $newImageName,
-        //     'about' => $request->about,
-        //     'facebook' => $request->facebook,
-        //     'twitter' => $request->twitter,
-        //     'instagram' => $request->instagram,
-        // ]);
+        $profile = Profile::create([
+            'users_id' => $id,
+            'image_path' => $newImageName,
+            'about' => $request->about,
+            'facebook' => $request->facebook,
+            'twitter' => $request->twitter,
+            'instagram' => $request->instagram,
+        ]);
 
         return redirect('/profile');
     }

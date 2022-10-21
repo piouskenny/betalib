@@ -26,44 +26,46 @@
                 </div>
             </div>
             <h1 class=" row text-primary display-3 mt-5">Library</h1>
-            <div class="row mt-2">
 
-                <div class="col-md-3 my-3">
+
+            <div class="row  d-flex justify-content-center mt-2">
+
+                <div class="col-md-3 col-6 my-3">
                     <img src="{{ asset('resourses/book 1.JPG ')  }}" class="w-75 h-75 rounded" alt="">
                     <h3 class="mt-2">Book Title</h3>
                     <small>Author: Name</small>
                 </div>
-                <div class="col-md-3 my-3">
+                <div class="col-md-3 col-6 my-3">
                     <img src="{{ asset('resourses/book 2.JPG ')  }}" class="w-75 h-75 rounded" alt="">
                     <h3 class="mt-2">Book Title</h3>
                     <small>Author: Name</small>
                 </div>
-                <div class="col-md-3 my-3">
+                <div class="col-md-3 col-6 my-3">
                     <img src="{{ asset('resourses/book 3.JPG ')  }}" class="w-75 h-75 rounded" alt="">
                     <h3 class="mt-2">Book Title</h3>
                     <small>Author: Name</small>
                 </div>
-                <div class="col-md-3 my-3">
+                <div class="col-md-3 col-6 my-3">
                     <img src="{{ asset('resourses/book 4.JPG ')  }}" class="w-75 h-75 rounded" alt="">
                     <h3 class="mt-2">Book Title</h3>
                     <small>Author: Name</small>
                 </div>
-                <div class="col-md-3 my-3">
+                <div class="col-md-3 col-6 my-3">
                     <img src="{{ asset('resourses/book 5.JPG ')  }}" class="w-75 h-75 rounded" alt="">
                     <h3 class="mt-2">Book Title</h3>
                     <small>Author: Name</small>
                 </div>
-                <div class="col-md-3 my-3">
+                <div class="col-md-3 col-6 my-3">
                     <img src="{{ asset('resourses/book 6.PNG ')  }}" class="w-75 h-75 rounded" alt="">
                     <h3 class="mt-2">Book Title</h3>
                     <small>Author: Name</small>
                 </div>
-                <div class="col-md-3 my-3">
+                <div class="col-md-3 col-6 my-3">
                     <img src="{{ asset('resourses/book 7.JPG ')  }}" class="w-75 h-75 rounded" alt="">
                     <h3 class="mt-2">Book Title</h3>
                     <small>Author: Name</small>
                 </div>
-                <div class="col-md-3 my-3">
+                <div class="col-md-3 col-6 my-3">
                     <img src="{{ asset('resourses/book 8.JPG ')  }}" class="w-75 h-75 rounded" alt="">
                     <h3 class="mt-2">Book Title</h3>
                     <small>Author: Name</small>
