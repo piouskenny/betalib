@@ -163,15 +163,16 @@ class UserController extends Controller
 
         $request->profile_img->move(public_path('images/profile_pics'), $newImageName);
 
+        dd($request->all());
 
-        $profile = Profile::create([
-            'users_id' => $id,
-            'image_path' => $newImageName,
-            'about' => $request->about,
-            'facebook' => $request->facebook,
-            'twitter' => $request->twitter,
-            'instagram' => $request->instagram,
-        ]);
+        // $profile = Profile::create([
+        //     'users_id' => $id,
+        //     'image_path' => $newImageName,
+        //     'about' => $request->about,
+        //     'facebook' => $request->facebook,
+        //     'twitter' => $request->twitter,
+        //     'instagram' => $request->instagram,
+        // ]);
 
         return redirect('/profile');
     }
