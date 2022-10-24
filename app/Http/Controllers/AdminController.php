@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Admin;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -15,14 +16,16 @@ class AdminController extends Controller
      */
     public function index()
     {
-        if(!session()->has('LoggedUser')) {
+        if (!session()->has('LoggedUser')) {
             return redirect('/bl-admin/login');
-        } elseif(session()->has('LoggedUser')) {
+        } elseif (session()->has('LoggedUser')) {
             $user = Admin::where('id', '=', session('LoggedUser'))->first();
             $data = ['LoggedUserInfo' => $user,];
         }
 
-        return view('admin.index', $data);
+        $users = User::all()->count('username');
+
+        return view('admin.index', $data, compact('users'));
     }
 
     /**
@@ -124,5 +127,13 @@ class AdminController extends Controller
     public function destroy(Admin $admin)
     {
         //
+    }
+
+    public function logout()
+    {
+        if (session()->has('LoggedUser')) {
+            session()->pull('LoggedUser');
+            return redirect('bl-admin/login');
+        }
     }
 }
