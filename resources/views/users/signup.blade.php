@@ -58,7 +58,7 @@
                                 <select class="form-control form-control-sm" id="exampleFormControlSelect2"
                                     name="country">
                                     <option hidden value="">Country</option>
-                                    <option value="nigeria">Nigeria</option>
+                                    <option value="Nigeria">Nigeria</option>
                                     <option value="Ghana">Ghana</option>
                                     <option value="United State">United States of America</option>
                                     <option value="United Kingdom">United Kingdom</option>
