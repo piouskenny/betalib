@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Admin;
 use App\Models\User;
+use App\Models\Book;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -26,6 +27,62 @@ class AdminController extends Controller
         $users = User::all()->count('username');
 
         return view('admin.index', $data, compact('users'));
+    }
+
+    public function add_book()
+    {
+        if (!session()->has('LoggedUser')) {
+            return redirect('/bl-admin/login');
+        } elseif (session()->has('LoggedUser')) {
+            $user = Admin::where('id', '=', session('LoggedUser'))->first();
+            $data = ['LoggedUserInfo' => $user,];
+        }
+
+        return view('admin.add_book', $data);
+    }
+
+
+
+    public function all_books()
+    {
+        if (!session()->has('LoggedUser')) {
+            return redirect('/bl-admin/login');
+        } elseif (session()->has('LoggedUser')) {
+            $user = Admin::where('id', '=', session('LoggedUser'))->first();
+            $data = ['LoggedUserInfo' => $user,];
+        }
+
+
+        $all_books = Book::all();
+
+        return view('admin.all_books', $data, compact('all_books'));
+    }
+
+    public function store_book(Request $request)
+    {
+
+        $request->validate([
+            'book_title' => 'required',
+            'book_author' => 'required|string',
+            'book_cover' => 'required|mimes:jpg,png,jpeg|max:4000',
+            'date_written' => 'required',
+            'description' => 'required',
+        ]);
+
+        $bookCoverName = time() . '-' . $request->book_title . '.' . $request->book_cover->extension();
+
+        $request->book_cover->move(public_path('book_cover'), $bookCoverName);
+
+
+        $book = Book::create([
+            'book_title' => $request->book_title,
+            'book_author' => $request->book_author,
+            'book_cover' => $bookCoverName,
+            'date_written' => $request->date_written,
+            'description' => $request->description,
+        ]);
+
+        return redirect('/bl-admin/add_book');
     }
 
     /**

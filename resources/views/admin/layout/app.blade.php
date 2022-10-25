@@ -32,12 +32,12 @@
 
                     <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#"
                         data-bs-toggle="dropdown">
-                        <span class="d-none d-md-block dropdown-toggle ps-2">{{ $LoggedUserInfo['username']}}</span>
+                        <span class="d-none d-md-block dropdown-toggle ps-2">{{ $LoggedUserInfo['username'] }}</span>
                     </a><!-- End Profile Iamge Icon -->
 
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                         <li class="dropdown-header">
-                            <h6>{{ $LoggedUserInfo['username']}}</h6>
+                            <h6>{{ $LoggedUserInfo['username'] }}</h6>
                             <span>Web Designer</span>
                         </li>
                         <li>
@@ -80,9 +80,9 @@
                                 <form action="{{ route('bl-admin_logout') }}" method="get">
                                     @csrf
                                     @method('get')
-                                    <button class="btn" type="submit"><span>Sign Out</span></button> 
+                                    <button class="btn" type="submit"><span>Sign Out</span></button>
                                 </form>
-                                
+
                             </a>
                         </li>
 
@@ -107,34 +107,20 @@
             </li><!-- End Dashboard Nav -->
 
             <li class="nav-item">
-                <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse"
-                    href="#">
-                    <i class="bi bi-menu-button-wide"></i><span>Add Books</span><i
-                        class="bi bi-chevron-down ms-auto"></i>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse"
-                    href="#">
-                    <i class="bi bi-menu-button-wide"></i><span>All Books</span><i
-                        class="bi bi-chevron-down ms-auto"></i>
+                <a class="nav-link" href="{{ route('bl-admin_add_book') }}">
+                    <i class="bi bi-menu-button-wide"></i><span>Add Books</span>
                 </a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse"
-                    href="#">
-                    <i class="bi bi-menu-button-wide"></i><span>Revies</span><i
-                        class="bi bi-chevron-down ms-auto"></i>
+                <a class="nav-link " href="{{ route('bl-admin_all_books') }}">
+                    <i class="bi bi-menu-button-wide"></i><span>All Books</span>
                 </a>
             </li>
 
-            <li class="nav-heading">Pages</li>
-
             <li class="nav-item">
-                <a class="nav-link collapsed" href="users-profile.html">
-                    <i class="bi bi-person"></i>
-                    <span>Profile</span>
+                <a class="nav-link" href="#">
+                    <i class="bi bi-menu-button-wide"></i><span>Reviews</span>
                 </a>
             </li>
         </ul>
@@ -156,6 +142,22 @@
             class="bi bi-arrow-up-short"></i></a>
 
     <!-- Vendor JS Files -->
+
+
+    <script src="{{ asset('vendors/ckeditor5/ckeditor.js') }}"></script>
+    <script>
+        ClassicEditor
+            .create(document.querySelector('#editor'), {
+                //toolbar: [ 'heading', '|', 'bold', 'italic', 'link', ]
+            })
+            .then(editor => {
+                window.editor = editor;
+            })
+            .catch(err => {
+                console.error(err.stack);
+            });
+    </script>
+
     <script src="{{ asset('admin/assets/vendor/apexcharts/apexcharts.min.js') }}"></script>
     <script src="{{ asset('admin/assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('admin/assets/vendor/chart.js/chart.min.js') }}"></script>
