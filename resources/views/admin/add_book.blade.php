@@ -15,6 +15,20 @@
         <section class="section dashboard">
             <div class="row d-flex justify-content-center">
                 <div class="col-md-6 shadow rounded">
+
+                    <div class="result">
+                        @if (Session::get('success'))
+                            <div class="alert alert-success">
+                                {{ Session::get('success') }}
+                            </div>
+                        @endif
+
+                        @if (Session::get('failed'))
+                            <div class="alert alert-danger">
+                                {{ Session::get('failed') }}
+                            </div>
+                        @endif
+                    </div>
                     <form action="{{ route('bl-admin_store_book') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('post')
@@ -36,21 +50,22 @@
                         </div>
                         <div class="form-group my-4">
                             <label for="cover">Date Written</label>
-                            <input type="date" name="date_written"  id=""
-                                class="form-control my-2">
+                            <input type="date" name="date_written" id="" class="form-control my-2">
                         </div>
                         <div class="form-group my-4">
                             <label for="cover">Description</label>
                             <textarea name="description" id="editor" cols="80" rows="10">
-                        </textarea>
+            </textarea>
                         </div>
                         <div class="form-group text-center my-4">
-                                <button type="submit" class="btn btn-primary w-100">
-                                    Add Book
-                                </button>
+                            <button type="submit" class="btn btn-primary w-100">
+                                Add Book
+                            </button>
                         </div>
                     </form>
+
                 </div>
+
             </div>
         </section>
 

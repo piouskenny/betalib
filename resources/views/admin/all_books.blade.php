@@ -17,7 +17,7 @@
                 @forelse ($all_books as $books)
                     <div class="col-md-3 col-6 my-3">
                         <img src="{{ asset('book_cover/'.$books['book_cover'])}}" class="w-75 h-75 rounded rounded-5" alt="">
-                        <h3 class="mt-2">{{ $books['book_title'] }}</h3>
+                        <h5 class="mt-2">{{ $books['book_title'] }}</h5>
                         <small>Author: {{ $books['book_author'] }}</small>
                     </div>
                 @empty

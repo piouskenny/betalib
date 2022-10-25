@@ -82,7 +82,7 @@ class AdminController extends Controller
             'description' => $request->description,
         ]);
 
-        return redirect('/bl-admin/add_book');
+        return redirect('/bl-admin/add_book')->with('success', 'BOOK ADDED sUCCESSFULLY');
     }
 
     /**

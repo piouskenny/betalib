@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Profile;
+use App\Models\Book;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -22,7 +23,10 @@ class UserController extends Controller
             $user = User::where('id', '=', session('LoggedUser'))->first();
             $data = ['LoggedUserInfo' => $user,];
         }
-        return view('index', $data);
+
+        $books = Book::all();
+
+        return view('index', $data, compact('books'));
     }
 
     /**
