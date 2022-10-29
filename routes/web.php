@@ -56,5 +56,11 @@ Route::group(
         Route::post('/store_book', [AdminController::class, 'store_book'])->name('bl-admin_store_book');
 
         Route::get('/all_books', [AdminController::class, 'all_books'])->name('bl-admin_all_books');
+
+        Route::get('/add_file/{id}', [AdminController::class, 'add_file'])->name('bl-admin_add_file');
+
+        Route::post('/store_file', [AdminController::class, 'store_file'])->name('bl-admin_store_file');
+
+
     }
 );

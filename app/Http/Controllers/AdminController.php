@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Admin;
 use App\Models\User;
 use App\Models\Book;
+use App\Models\BookFile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -26,7 +27,9 @@ class AdminController extends Controller
 
         $users = User::all()->count('username');
 
-        return view('admin.index', $data, compact('users'));
+        $book = Book::all()->count('book_title');
+
+        return view('admin.index', $data, compact('users', 'book'));
     }
 
     public function add_book()
@@ -158,9 +161,45 @@ class AdminController extends Controller
      * @param  \App\Models\Admin  $admin
      * @return \Illuminate\Http\Response
      */
-    public function edit(Admin $admin)
+    public function add_file($id)
     {
-        //
+
+        if (!session()->has('LoggedUser')) {
+            return redirect('/bl-admin/login');
+        } elseif (session()->has('LoggedUser')) {
+            $user = Admin::where('id', '=', session('LoggedUser'))->first();
+            $data = ['LoggedUserInfo' => $user,];
+        }
+
+        $book = Book::all()->where('id', '=', $id);
+
+        // dd($book['id']);
+        return view("admin.add_file", $data, compact('book'));
+    }
+
+    public function store_file(Request $request)
+    {
+        $request->validate([
+            "book_file" => 'mimes:docx,pdf,epud|required',
+        ]);
+
+
+        $filename = time() . '-' . $request->book_title . '.' . $request->book_file->extension();
+        $file_info = $request->book_file->getSize() / 1000000;
+        $filesize = round($file_info, 1) . " MB";
+
+        $request->book_file->move(public_path('books/'), $filename);
+
+        $book_file = BookFile::create([
+            'book_id' => $request->book_id,
+            'book_title' => $request->book_title,
+            'book_file' => $filename,
+            'book_size' => $filesize,
+        ]);
+
+        // return redirect('all_books');
+        dd("successful");
+        // dd($filename, $request->book_id, $request->book_title, $filesize);
     }
 
     /**

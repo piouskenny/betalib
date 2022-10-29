@@ -28,7 +28,7 @@
             <h1 class=" row text-primary display-3 mt-5">Library</h1>
 
 
-            <div class="row  d-flex justify-content-center mt-2">
+            <div class="row mt-2">
                 @forelse ($books as $book)
                     <div class="col-md-3 col-6 my-3">
                         <img src="{{ asset('book_cover/' . $book['book_cover']) }}" class="w-75 h-75 rounded rounded-5"
