@@ -31,15 +31,17 @@
             <div class="row mt-2">
                 @forelse ($books as $book)
                     <div class="col-md-3 col-6 my-3">
-                        <img src="{{ asset('book_cover/' . $book['book_cover']) }}" class="w-75 h-75 rounded rounded-5"
-                            alt="">
-                        <h5 class="mt-2">{{ $book['book_title'] }}</h5>
-                        <small>Author: {{ $book['book_author'] }}</small>
+                        <a href="{{ route('show_file', $book['id']) }}" class="nav-link text-dark">
+                            <img src="{{ asset('book_cover/' . $book['book_cover']) }}" class="w-75 h-75 rounded rounded-5"
+                                alt="">
+                            <h5 class="mt-2">{{ $book['book_title'] }}</h5>
+                            <small>Author: {{ $book['book_author'] }}</small>
+                        </a>
                     </div>
                 @empty
-                <div class="alert alert-danger">
-                    No Book Adde Yet
-                </div>
+                    <div class="alert alert-danger">
+                        No Book Adde Yet
+                    </div>
                 @endforelse
 
             </div>

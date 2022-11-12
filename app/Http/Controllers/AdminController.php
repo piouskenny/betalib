@@ -197,8 +197,8 @@ class AdminController extends Controller
             'book_size' => $filesize,
         ]);
 
-        // return redirect('all_books');
-        dd("successful");
+        return back()->with('success', 'Book File added successfully');
+        
         // dd($filename, $request->book_id, $request->book_title, $filesize);
     }
 
@@ -209,10 +209,6 @@ class AdminController extends Controller
      * @param  \App\Models\Admin  $admin
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Admin $admin)
-    {
-        //
-    }
 
     /**
      * Remove the specified resource from storage.

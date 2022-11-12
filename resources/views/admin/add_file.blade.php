@@ -15,25 +15,39 @@
         <section class="section dashboard">
             <div class="row d-flex justify-content-center">
                 <div class="col-md-6">
+                    <div class="result">
+                        @if (Session::get('success'))
+                            <div class="alert alert-success">
+                                {{ Session::get('success') }}
+                            </div>
+                        @endif
+
+                        @if (Session::get('failed'))
+                            <div class="alert alert-danger">
+                                {{ Session::get('failed') }}
+                            </div>
+                        @endif
+                    </div>
                     <form action="{{ route('bl-admin_store_file') }}" method="post" enctype="multipart/form-data">
                         @csrf
                         @method('post')
 
                         @forelse ($book as $one)
-                        <div class="form-group my-3">
-                            <input type="text" name="book_id" id=""  value="{{ $one['id'] }}" hidden class="form-control">
-                        </div>
-                           
-                        <div class="form-group my-3">
-                            <input type="text" name="book_title" id=""  value="{{ $one['book_title'] }}" hidden class="form-control">
-                        </div>
+                            <div class="form-group my-3">
+                                <input type="text" name="book_id" id="" value="{{ $one['id'] }}" hidden
+                                    class="form-control">
+                            </div>
 
-                        <div class="input-group mt-2 mb-3">
-                            <input type="file" name="book_file" class="form-control"  id="">
-                        </div>
+                            <div class="form-group my-3">
+                                <input type="text" name="book_title" id="" value="{{ $one['book_title'] }}"
+                                    hidden class="form-control">
+                            </div>
+
+                            <div class="input-group mt-2 mb-3">
+                                <input type="file" name="book_file" class="form-control" id="">
+                            </div>
 
                         @empty
-                            
                         @endforelse
 
                         <div class="form-group d-flex justify-content-center">

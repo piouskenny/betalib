@@ -5,8 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Profile;
 use App\Models\Book;
+use App\Models\BookFile;
+// use Facade\FlareClient\Http\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -177,6 +181,55 @@ class UserController extends Controller
         ]);
 
         return redirect('/profile');
+    }
+
+    public function show_file($id)
+    {
+        if(!session()->has('LoggedUser')) {
+            return redirect('login');
+        } elseif(session()->has('LoggedUser')) {
+            $user = User::where('id', '=', session('LoggedUser'))->first();
+            $data = ['LoggedUserInfo' => $user,];
+        }
+        // dd($id);
+        $book = Book::all()->where('id', '=', $id);
+        $book_file = BookFile::all()->where('book_id', '=', $id);
+
+        // dd($book, $book_file);
+
+        return view("users.show", $data, compact('book', 'book_file'));
+
+    }
+
+    public function description($id)
+    {
+        if(!session()->has('LoggedUser')) {
+            return redirect('login');
+        } elseif(session()->has('LoggedUser')) {
+            $user = User::where('id', '=', session('LoggedUser'))->first();
+            $data = ['LoggedUserInfo' => $user,];
+        }
+
+        return view("users.description", $data,);
+
+    }
+
+    public function download($id)
+    {
+        $book_file = BookFile::all()->where('book_id', '=', $id);
+        
+
+        foreach ($book_file as $file) {
+            $title = $file['book_title'];
+        }
+
+        foreach ($book_file as $file) {
+            $file = $file['book_file'];
+
+            $file_path = public_path('books/' . $file);           
+        }
+
+        return Response::download($file_path, $title . ".pdf", ['Content-Type: Document/pdf']);        
     }
 
     /**
