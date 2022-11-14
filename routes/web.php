@@ -30,6 +30,8 @@ Route::get('download/{id}', [UserController::class, 'download'])->name('download
 
 Route::get('description/{id}', [UserController::class, 'description'])->name('description');
 
+Route::get('add_review/{id}', [UserController::class, 'add_review'])->name('add_review');
+
 
 
 // Admin View and functionality

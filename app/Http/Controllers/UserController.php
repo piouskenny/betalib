@@ -210,9 +210,32 @@ class UserController extends Controller
             $data = ['LoggedUserInfo' => $user,];
         }
 
-        return view("users.description", $data,);
+        $book_info = Book::all()->where('id', '=', $id);
+
+        return view("users.description", $data, compact('book_info'));
 
     }
+
+    public function add_review($id) {
+        if(!session()->has('LoggedUser')) {
+            return redirect('login');
+        } elseif(session()->has('LoggedUser')) {
+            $user = User::where('id', '=', session('LoggedUser'))->first();
+            $data = ['LoggedUserInfo' => $user,];
+        }
+
+
+        $user_info_all = User::all()->where('id', '=', session('LoggedUser'));
+
+        // $user_info = ['info' => $user_info_all];
+
+        $book = Book::all()->where('id', '=', $id);
+
+        // $book_info = ['bookInfo' => $book];
+        
+        return view("users.add_review", $data, compact('user_info_all', 'book'));
+    }
+
 
     public function download($id)
     {
