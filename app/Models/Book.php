@@ -14,4 +14,7 @@ class Book extends Model
         return $this->hasOne(BookFile::class);
     }
     
+    public function Review() {
+        return $this->hasOne(Review::class);
+    }
 }

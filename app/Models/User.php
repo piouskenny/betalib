@@ -15,4 +15,8 @@ class User extends Model
         return $this->hasMany(Profile::class);
     }
 
+    public function review(){
+        return $this->hasOne(Review::class);
+    }
+
 }

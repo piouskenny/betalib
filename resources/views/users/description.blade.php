@@ -5,10 +5,14 @@
         <div class="content-wrapper">
             <div class="row bg-white shadow-sm hero-lib  d-flex justify-content-center">
                 <div class="col-12 text-center">
-                    @php
-                        $review = [];
-                    @endphp
-                    @forelse ($review as $none)
+                    @forelse ($review as $single)
+                        <div class="shadow my-3">
+                            <p>
+                                @php
+                                    echo htmlspecialchars_decode($single['review']);
+                                @endphp
+                            </p>
+                        </div>
                     @empty
                         <div class="alert alert-danger my-5 w-100 text-center">
                             NO REVIEW ADDED FOR THIS BOOK YET

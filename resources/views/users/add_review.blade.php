@@ -5,13 +5,35 @@
         <div class="content-wrapper">
             <div class="row bg-white shadow-sm hero-lib  d-flex justify-content-center">
                 <div class="col-md-6">
-                    <form action="" method="post">
+                    <div class="result">
+                        @if (Session::get('success'))
+                            <div class="alert alert-success">
+                                {{ Session::get('success') }}
+                            </div>
+                        @endif
+
+                        @if (Session::get('failed'))
+                            <div class="alert alert-danger">
+                                {{ Session::get('failed') }}
+                            </div>
+                        @endif
+                    </div>
+                    <form action="{{ route('upload_review') }}" method="post">
+                        <span class="text-danger my-2">
+                            @error('user_id')
+                                {{ $message }}
+                            @enderror
+                        </span>
                         @csrf
                         @method('post')
                         @forelse ($user_info_all as $one)
                             <div class="form-group my-5">
-                                <input type="text" name="username" id="" class="form-control"
-                                    value="{{ $one->username }}" disabled>
+                                <input type="text" hidden name="username" id="" class="form-control"
+                                    value="{{ $one->username }}">
+                            </div>
+                            <div class="form-group my-5">
+                                <input type="number" hidden name="user_id" id="" class="form-control"
+                                    value="{{ $one->id }}">
                             </div>
                         @empty
                         @endforelse
@@ -19,10 +41,12 @@
                             <div class="row">
                                 @forelse ($book as $one)
                                     <div class="col-6">
-                                        <input type="text" name="author" id="" class="form-control" disabled value="{{ $one->book_author }}">
+                                        <input type="text" hidden name="book_author" id="" class="form-control"
+                                            value="{{ $one->book_author }}">
                                     </div>
                                     <div class="col-6">
-                                        <input type="text" name="author" id="" class="form-control" disabled value="{{ $one->book_title }}">
+                                        <input type="text" hidden name="book_title" id="" class="form-control"
+                                            value="{{ $one->book_title }}">
                                     </div>
                                 @empty
                                 @endforelse

@@ -32,6 +32,7 @@ Route::get('description/{id}', [UserController::class, 'description'])->name('de
 
 Route::get('add_review/{id}', [UserController::class, 'add_review'])->name('add_review');
 
+Route::post('upload_review', [UserController::class, 'upload_review'])->name('upload_review');
 
 
 // Admin View and functionality

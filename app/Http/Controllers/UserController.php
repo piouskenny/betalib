@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Profile;
+use App\Models\Review;
 use App\Models\Book;
 use App\Models\BookFile;
 // use Facade\FlareClient\Http\Response;
@@ -212,7 +213,9 @@ class UserController extends Controller
 
         $book_info = Book::all()->where('id', '=', $id);
 
-        return view("users.description", $data, compact('book_info'));
+        $review = Review::all();
+
+        return view("users.description", $data, compact('book_info', 'review'));
 
     }
 
@@ -236,6 +239,26 @@ class UserController extends Controller
         return view("users.add_review", $data, compact('user_info_all', 'book'));
     }
 
+    public function upload_review(Request $request) {
+        // dd($request->all());
+        $request->validate(
+            [
+                'review' => 'required|string',
+                'user_id' => 'unique:reviews',
+                'user_username' => 'unique:reviews'
+            ],
+        );
+
+        $review = Review::create([
+            'book_title' => $request->book_title,
+            'author' => $request->book_author,
+            'user_id' => $request->user_id,
+            'user_username' => $request->username,
+            'review' => $request->review,
+        ]);
+
+        return back()->with("success", "Review Uploaded Successfully go back to check your review");
+    }
 
     public function download($id)
     {

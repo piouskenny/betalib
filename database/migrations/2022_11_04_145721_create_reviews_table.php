@@ -21,6 +21,10 @@ class CreateReviewsTable extends Migration
             $table->string("user_username");
             $table->string("review");
             $table->timestamps();
+            $table->foreign('book_title')->references('book_title')->on('books')->onDelete('cascade');
+            $table->foreign('author')->references('book_author')->on('books')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('user_username')->references('username')->on('users')->onDelete('cascade');
         });
     }
 
