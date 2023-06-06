@@ -7,7 +7,6 @@ use App\Models\Profile;
 use App\Models\Review;
 use App\Models\Book;
 use App\Models\BookFile;
-// use Facade\FlareClient\Http\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Response;
@@ -125,6 +124,7 @@ class UserController extends Controller
         }
 
         $user_info = Profile::where('id', '=', session('LoggedUser'))->first();
+        
         $user_info_data = ['information' => $user_info];
 
         return view('users.profile', $data, $user_info_data);
