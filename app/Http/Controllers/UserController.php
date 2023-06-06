@@ -22,16 +22,11 @@ class UserController extends Controller
      */
     public function index()
     {
-        if(!session()->has('LoggedUser')) {
-            return redirect('login');
-        } elseif(session()->has('LoggedUser')) {
-            $user = User::where('id', '=', session('LoggedUser'))->first();
-            $data = ['LoggedUserInfo' => $user,];
-        }
+        $user = User::where('id', '=', session('LoggedUser'))->first();
 
         $books = Book::all();
 
-        return view('index', $data, compact('books'));
+        return view('index', compact('books'))->with('LoggedUserInfo', $user);
     }
 
     /**
@@ -117,9 +112,9 @@ class UserController extends Controller
      */
     public function profile()
     {
-        if(!session()->has('LoggedUser')) {
+        if (!session()->has('LoggedUser')) {
             return redirect('login');
-        } elseif(session()->has('LoggedUser')) {
+        } elseif (session()->has('LoggedUser')) {
             $user = User::where('id', '=', session('LoggedUser'))->first();
             $data = ['LoggedUserInfo' => $user];
         }
@@ -138,9 +133,9 @@ class UserController extends Controller
      */
     public function updateProfile()
     {
-        if(!session()->has('LoggedUser')) {
+        if (!session()->has('LoggedUser')) {
             return redirect('login');
-        } elseif(session()->has('LoggedUser')) {
+        } elseif (session()->has('LoggedUser')) {
             $user = User::where('id', '=', session('LoggedUser'))->first();
             $data = ['LoggedUserInfo' => $user,];
         }
@@ -186,9 +181,9 @@ class UserController extends Controller
 
     public function show_file($id)
     {
-        if(!session()->has('LoggedUser')) {
+        if (!session()->has('LoggedUser')) {
             return redirect('login');
-        } elseif(session()->has('LoggedUser')) {
+        } elseif (session()->has('LoggedUser')) {
             $user = User::where('id', '=', session('LoggedUser'))->first();
             $data = ['LoggedUserInfo' => $user,];
         }
@@ -199,14 +194,13 @@ class UserController extends Controller
         // dd($book, $book_file);
 
         return view("users.show", $data, compact('book', 'book_file'));
-
     }
 
     public function description($id)
     {
-        if(!session()->has('LoggedUser')) {
+        if (!session()->has('LoggedUser')) {
             return redirect('login');
-        } elseif(session()->has('LoggedUser')) {
+        } elseif (session()->has('LoggedUser')) {
             $user = User::where('id', '=', session('LoggedUser'))->first();
             $data = ['LoggedUserInfo' => $user,];
         }
@@ -216,13 +210,13 @@ class UserController extends Controller
         $review = Review::all();
 
         return view("users.description", $data, compact('book_info', 'review'));
-
     }
 
-    public function add_review($id) {
-        if(!session()->has('LoggedUser')) {
+    public function add_review($id)
+    {
+        if (!session()->has('LoggedUser')) {
             return redirect('login');
-        } elseif(session()->has('LoggedUser')) {
+        } elseif (session()->has('LoggedUser')) {
             $user = User::where('id', '=', session('LoggedUser'))->first();
             $data = ['LoggedUserInfo' => $user,];
         }
@@ -235,11 +229,12 @@ class UserController extends Controller
         $book = Book::all()->where('id', '=', $id);
 
         // $book_info = ['bookInfo' => $book];
-        
+
         return view("users.add_review", $data, compact('user_info_all', 'book'));
     }
 
-    public function upload_review(Request $request) {
+    public function upload_review(Request $request)
+    {
         // dd($request->all());
         $request->validate(
             [
@@ -263,7 +258,7 @@ class UserController extends Controller
     public function download($id)
     {
         $book_file = BookFile::all()->where('book_id', '=', $id);
-        
+
 
         foreach ($book_file as $file) {
             $title = $file['book_title'];
@@ -272,10 +267,10 @@ class UserController extends Controller
         foreach ($book_file as $file) {
             $file = $file['book_file'];
 
-            $file_path = public_path('books/' . $file);           
+            $file_path = public_path('books/' . $file);
         }
 
-        return Response::download($file_path, $title . ".pdf", ['Content-Type: Document/pdf']);        
+        return Response::download($file_path, $title . ".pdf", ['Content-Type: Document/pdf']);
     }
 
     /**
@@ -286,7 +281,7 @@ class UserController extends Controller
      */
     public function logout()
     {
-        if(session()->has('LoggedUser')) {
+        if (session()->has('LoggedUser')) {
             session()->pull('LoggedUser');
             return redirect('/login');
         }

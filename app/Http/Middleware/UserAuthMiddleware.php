@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use App\Models\User;
 
 class UserAuthMiddleware
 {
@@ -16,6 +17,12 @@ class UserAuthMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
+        if (!session()->has('LoggedUser')) {
+            return redirect('login');
+        } elseif (session()->has('LoggedUser')) {
+            $user = User::where('id', '=', session('LoggedUser'))->first();
+        }
+
         return $next($request);
     }
 }
