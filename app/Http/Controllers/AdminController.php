@@ -85,9 +85,9 @@ class AdminController extends Controller
             'description' => $request->description,
         ]);
 
-        return redirect('/bl-admin/add_book')->with('success', 'BOOK ADDED sUCCESSFULLY');
+        return redirect('/bl-admin/add_book')->with('success', 'Book Added Successfully');
     }
-
+    
     /**
      * Show the form for creating a new resource.
      *

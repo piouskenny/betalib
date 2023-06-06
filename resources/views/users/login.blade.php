@@ -5,7 +5,7 @@
             <div class="row w-100 mx-0">
                 <div class="col-lg-4 mx-auto">
                     <div class="auth-form-light text-left py-5 px-4 px-sm-5 rounded">
-                        <div class="result">
+                        <div class="result my-4">
                             @if (Session::get('success'))
                                 <div class="alert alert-success">
                                     {{ Session::get('success') }}
