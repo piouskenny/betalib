@@ -15,16 +15,13 @@ class CreateReviewsTable extends Migration
     {
         Schema::create('reviews', function (Blueprint $table) {
             $table->id();
-            $table->string("book_title");
+            $table->string("book_id");
             $table->string("author");
             $table->string("user_id");
-            $table->string("user_username");
             $table->string("review");
             $table->timestamps();
-            $table->foreign('book_title')->references('book_title')->on('books')->onDelete('cascade');
-            $table->foreign('author')->references('book_author')->on('books')->onDelete('cascade');
+            $table->foreign('book_title')->references('id')->on('books')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('user_username')->references('username')->on('users')->onDelete('cascade');
         });
     }
 
