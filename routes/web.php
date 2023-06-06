@@ -6,34 +6,38 @@ use App\Http\Controllers\UserController;
 
 
 // Users View and functionality
-Route::get('/', [UserController::class, 'index'])->name('index');
 
-Route::get('/signup', [UserController::class, 'create'])->name('signup');
+Route::prefix('/')->group(
+    function () {
+        Route::get('', [UserController::class, 'index'])->name('index');
 
-Route::get('/login', [UserController::class, 'login'])->name('login');
+        Route::get('signup', [UserController::class, 'create'])->name('signup');
 
-Route::post('/store', [UserController::class, 'store'])->name('store');
+        Route::get('login', [UserController::class, 'login'])->name('login');
 
-Route::post('/check', [UserController::class, 'check'])->name('check');
+        Route::post('store', [UserController::class, 'store'])->name('store');
 
-Route::get('logout', [UserController::class, 'logout'])->name('logout');
+        Route::post('check', [UserController::class, 'check'])->name('check');
 
-Route::get('profile', [UserController::class, 'profile'])->name('profile');
+        Route::get('logout', [UserController::class, 'logout'])->name('logout');
 
-Route::get('update_profile', [UserController::class, 'updateProfile'])->name('update_profile');
+        Route::get('profile', [UserController::class, 'profile'])->name('profile');
 
-Route::post('update_profile_details', [UserController::class, 'update_profile_details'])->name('update_profile_details');
+        Route::get('update_profile', [UserController::class, 'updateProfile'])->name('update_profile');
 
-Route::get('/show/{id}', [UserController::class, 'show_file'])->name('show_file');
+        Route::post('update_profile_details', [UserController::class, 'update_profile_details'])->name('update_profile_details');
 
-Route::get('download/{id}', [UserController::class, 'download'])->name('download');
+        Route::get('show/{id}', [UserController::class, 'show_file'])->name('show_file');
 
-Route::get('description/{id}', [UserController::class, 'description'])->name('description');
+        Route::get('download/{id}', [UserController::class, 'download'])->name('download');
 
-Route::get('add_review/{id}', [UserController::class, 'add_review'])->name('add_review');
+        Route::get('description/{id}', [UserController::class, 'description'])->name('description');
 
-Route::post('upload_review', [UserController::class, 'upload_review'])->name('upload_review');
+        Route::get('add_review/{id}', [UserController::class, 'add_review'])->name('add_review');
 
+        Route::post('upload_review', [UserController::class, 'upload_review'])->name('upload_review');
+    }
+);
 
 // Admin View and functionality
 
