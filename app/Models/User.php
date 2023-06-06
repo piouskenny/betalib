@@ -11,12 +11,13 @@ class User extends Model
 
     protected $fillable = ['username', 'firstname', 'lastname', 'email', 'country', 'password'];
 
-    public function profile(){
-        return $this->hasMany(Profile::class);
+    public function profile()
+    {
+        return $this->hasOne(Profile::class);
     }
 
-    public function review(){
+    public function review()
+    {
         return $this->hasOne(Review::class);
     }
-
 }
