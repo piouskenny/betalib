@@ -36,7 +36,7 @@
                     </div>
                 </li>
                 <h1 class="text-center h4 mt-4">
-                    <b>{{ $LoggedUserInfo->firstname }} {{ $LoggedUserInfo->lastname }}</b>
+                    <b>{{ $user->firstname }} {{ $user->lastname }}</b>
                 </h1>
             </ul>
 

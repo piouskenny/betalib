@@ -24,11 +24,11 @@ class UserController extends Controller
     {
         $user = User::where('id', '=', session('LoggedUser'))->first();
 
-        dd($user);
+        // dd($user);
 
-        // $books = Book::all();
+        $books = Book::all();
 
-        // return view('index', compact('books'))->with('LoggedUserInfo', $user);
+        return view('index', compact('books'))->with('user', $user);
     }
 
     /**
@@ -44,7 +44,6 @@ class UserController extends Controller
 
     public function login()
     {
-        dd("TESTING");
         return view('users.login');
     }
 

@@ -7,9 +7,7 @@ use App\Http\Controllers\UserController;
 
 // Users View and functionality
 
-// Route::middleware(['first'])->group(
-//     function () {
-Route::get('/', [UserController::class, 'index'])->name('index');
+Route::get('/', [UserController::class, 'index'])->name('index')->middleware('userAuth');
 
 Route::get('/signup', [UserController::class, 'create'])->name('signup');
 
@@ -21,28 +19,26 @@ Route::post('/check', [UserController::class, 'check'])->name('check');
 
 Route::get('/logout', [UserController::class, 'logout'])->name('logout');
 
-Route::get('/profile', [UserController::class, 'profile'])->name('profile');
+Route::get('/profile', [UserController::class, 'profile'])->name('profile')->middleware('userAuth');
 
-Route::get('/update_profile', [UserController::class, 'updateProfile'])->name('update_profile');
+Route::get('/update_profile', [UserController::class, 'updateProfile'])->name('update_profile')->middleware('userAuth');
 
-Route::post('/update_profile_details', [UserController::class, 'update_profile_details'])->name('update_profile_details');
+Route::post('/update_profile_details', [UserController::class, 'update_profile_details'])->name('update_profile_details')->middleware('userAuth');
 
-Route::get('/show/{id}', [UserController::class, 'show_file'])->name('show_file');
+Route::get('/show/{id}', [UserController::class, 'show_file'])->name('show_file')->middleware('userAuth');
 
-Route::get('/download/{id}', [UserController::class, 'download'])->name('download');
+Route::get('/download/{id}', [UserController::class, 'download'])->name('download')->middleware('userAuth');
 
-Route::get('/description/{id}', [UserController::class, 'description'])->name('description');
+Route::get('/description/{id}', [UserController::class, 'description'])->name('description')->middleware('userAuth');
 
-Route::get('/add_review/{id}', [UserController::class, 'add_review'])->name('add_review');
+Route::get('/add_review/{id}', [UserController::class, 'add_review'])->name('add_review')->middleware('userAuth');
 
-Route::post('/upload_review', [UserController::class, 'upload_review'])->name('upload_review');
-//     }
-// );
+Route::post('/upload_review', [UserController::class, 'upload_review'])->name('upload_review')->middleware('userAuth');
+
+
 
 // Admin View and functionality
 
-// Route::prefix('/bl-admin')->group(
-//     function () {
 Route::get('/bl-admin', [AdminController::class, 'index'])->name('bl-admin_index');
 
 Route::get('bl-admin/signup', [AdminController::class, 'create'])->name('bl-admin_signup');
@@ -64,5 +60,3 @@ Route::get('bl-admin/all_books', [AdminController::class, 'all_books'])->name('b
 Route::get('bl-admin/add_file/{id}', [AdminController::class, 'add_file'])->name('bl-admin_add_file');
 
 Route::post('bl-admin/store_file', [AdminController::class, 'store_file'])->name('bl-admin_store_file');
-//     }
-// );
