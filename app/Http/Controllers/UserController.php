@@ -172,7 +172,7 @@ class UserController extends Controller
 
 
         $book = Book::where('id', $id)->first();
-        $book_file = BookFile::all()->where('book_id', '=', $id);
+        $book_file = BookFile::where('book_id', $id)->first();
 
         // dd($book, $book_file);
 

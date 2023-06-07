@@ -28,18 +28,17 @@
                     <a href="{{ route('description', $book->id) }}"
                         class="d-block my-3 text-info border border-3 rounded nav-link mx-0">See / Write Review</a>
 
-                    @forelse ($book_file as $file)
-                        <p class="text-danger mt-3">File Size: {{ $file['book_size'] }} </p>
+                    @if ($book_file)
+                        <p class="text-danger mt-3">File Size: {{ $book_file->book_size }} </p>
 
-                        <a href="{{ route('download', $file['book_id']) }}" class="btn btn-primary w-100 text-center">
+                        <a href="{{ route('download', $book_file->book_id) }}" class="btn btn-primary w-100 text-center">
                             Download File
                         </a>
-                        {{-- {{ $file['book_file'] }} --}}
-                    @empty
+                    @else
                         <div class="alert alert-warning my-4">
                             Sorry, No File Was Attached to This Book, Check back later
                         </div>
-                    @endforelse
+                    @endif
                 </div>
             </div>
         </div>
