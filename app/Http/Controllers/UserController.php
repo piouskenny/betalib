@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UserSignupRequest;
 use App\Models\User;
 use App\Models\Profile;
 use App\Models\Review;
@@ -52,17 +53,9 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UserSignupRequest $request)
     {
-        $request->validate([
-            'username' => 'required|string|unique:users',
-            'firstname' => 'required|string',
-            'lastname' => 'required|string',
-            'email' => 'required|email|unique:users',
-            'country' => 'required|string',
-            'password' => 'required|min:7|'
-        ]);
-
+        $request->validated();
 
         $user = User::create([
             'username' => $request->username,
@@ -72,7 +65,6 @@ class UserController extends Controller
             'country' => $request->country,
             'password' => Hash::make($request->password)
         ]);
-
 
 
         return redirect('/login')->with('success', 'create account successfully');
@@ -176,19 +168,22 @@ class UserController extends Controller
 
     public function show_file($id)
     {
-        if (!session()->has('LoggedUser')) {
-            return redirect('login');
-        } elseif (session()->has('LoggedUser')) {
-            $user = User::where('id', '=', session('LoggedUser'))->first();
-            $data = ['LoggedUserInfo' => $user,];
-        }
-        // dd($id);
-        $book = Book::all()->where('id', '=', $id);
+        $user = User::where('id', session('LoggedUser'))->first();
+
+
+        $book = Book::where('id', $id)->first();
         $book_file = BookFile::all()->where('book_id', '=', $id);
 
         // dd($book, $book_file);
 
-        return view("users.show", $data, compact('book', 'book_file'));
+        return view(
+            "users.show",
+            [
+                'user' => $user,
+                'book' => $book,
+                'book_file' => $book_file,
+            ]
+        );
     }
 
     public function description($id)

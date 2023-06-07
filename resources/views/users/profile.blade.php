@@ -48,11 +48,9 @@
                             </div>
                         </div>
 
-                        <a href="{{ route('update_profile') }}" class="btn btn-info my-3 w-50">Update Profile</a>
                     </div>
 
                     <div class="col-md-7 mt-3">
-
                     </div>
                 </div>
             @else
@@ -136,7 +134,6 @@
                                                     @enderror
                                                 </span>
                                             </div>
-
                                             <div class="form-group my-3 text-center ">
                                                 <button type="submit" class="btn btn-primary w-100">Update Profile</button>
                                             </div>
