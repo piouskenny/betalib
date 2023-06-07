@@ -26,9 +26,9 @@ class UserController extends Controller
 
         dd($user);
 
-        $books = Book::all();
+        // $books = Book::all();
 
-        return view('index', compact('books'))->with('LoggedUserInfo', $user);
+        // return view('index', compact('books'))->with('LoggedUserInfo', $user);
     }
 
     /**
@@ -44,6 +44,7 @@ class UserController extends Controller
 
     public function login()
     {
+        dd("TESTING");
         return view('users.login');
     }
 
