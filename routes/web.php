@@ -21,7 +21,7 @@ Route::get('/logout', [UserController::class, 'logout'])->name('logout');
 
 Route::get('/profile', [UserController::class, 'profile'])->name('profile')->middleware('userAuth');
 
-Route::get('/update_profile', [UserController::class, 'updateProfile'])->name('update_profile')->middleware('userAuth');
+// Route::get('/update_profile', [UserController::class, 'updateProfile'])->name('update_profile')->middleware('userAuth');
 
 Route::post('/update_profile_details', [UserController::class, 'update_profile_details'])->name('update_profile_details')->middleware('userAuth');
 
