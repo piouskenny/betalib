@@ -24,6 +24,8 @@ class UserController extends Controller
     {
         $user = User::where('id', '=', session('LoggedUser'))->first();
 
+        dd($user);
+
         $books = Book::all();
 
         return view('index', compact('books'))->with('LoggedUserInfo', $user);
@@ -112,17 +114,19 @@ class UserController extends Controller
      */
     public function profile()
     {
-        if (!session()->has('LoggedUser')) {
-            return redirect('login');
-        } elseif (session()->has('LoggedUser')) {
-            $user = User::where('id', '=', session('LoggedUser'))->first();
-            $data = ['LoggedUserInfo' => $user];
-        }
 
-        $user_info = Profile::where('id', '=', session('LoggedUser'))->first();
-        $user_info_data = ['information' => $user_info];
 
-        return view('users.profile', $data, $user_info_data);
+        $data = User::where('id', '=', session('LoggedUser'))->first();
+
+        $user_info_data = Profile::where('id', '=', session('LoggedUser'))->first();
+
+        return view(
+            'users.profile',
+            [
+                'data' => $data,
+                'user_info_data' => $user_info_data,
+            ]
+        );
     }
 
     /**

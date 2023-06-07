@@ -1,21 +1,21 @@
 @extends('layout.app')
 
 @section('content')
-    @if (!$information)
+    @if (!$user_info_data)
         @php
-            class Details 
+            class Details
             {
-                public $image_path = "face1.jpg";
+                public $image_path = 'face1.jpg';
                 public $about;
                 public $facebook;
                 public $twitter;
                 public $instagram;
             }
             
-            $information = new Details();
+            $user_info_data = new Details();
         @endphp
     @endif
-    
+
     <!-- content -->
     <div class="main-panel">
         <div class="content-wrapper">
@@ -23,11 +23,11 @@
                 <div class="hero_profile">
                     <div class="profile_image">
 
-                        <img src="{{ asset('images/profile_pics/' . $information->image_path) }}"
+                        <img src="{{ asset('images/profile_pics/' . $user_info_data->image_path) }}"
                             class="img_profile border border-light border-5" alt="">
 
-                        <h1 class="text-light h4 mt-5 mx-3">{{ $LoggedUserInfo->firstname }} {{ $LoggedUserInfo->lastname }}
-                            <span class="text-mutted d-block h6 mt-1">{{ $LoggedUserInfo->username }}</span>
+                        <h1 class="text-light h4 mt-5 mx-3">{{ $user_info_data->firstname }} {{ $user_info_data->lastname }}
+                            <span class="text-mutted d-block h6 mt-1">{{ $user_info_data->username }}</span>
                         </h1>
                     </div>
                 </div>
@@ -39,12 +39,12 @@
                         <h5 class="my-3">
                             <b>About Me</b>
                         </h5>
-                        <p class="mt-3">{{ $information->about }}</p class="mt-3">
+                        <p class="mt-3">{{ $user_info_data->about }}</p class="mt-3">
 
                         <div class="common_info mt-4">
-                            <p> <b>Username: {{ $LoggedUserInfo->username }}</b></p>
-                            <p> <b>Email: {{ $LoggedUserInfo->email }}</b></p>
-                            <p> <b>Country: {{ $LoggedUserInfo->country }}</b></p>
+                            <p> <b>Username: {{ $user_info_data->username }}</b></p>
+                            <p> <b>Email: {{ $user_info_data->email }}</b></p>
+                            <p> <b>Country: {{ $user_info_data->country }}</b></p>
                         </div>
                     </div>
 
@@ -54,9 +54,10 @@
                         </h5>
 
                         <div class="common_info mt-4">
-                            <p> <b> <i class="ti-facebook mr-2 text-info"></i>{{ $information->facebook }}</b></p>
-                            <p> <b><i class="ti-twitter mr-2 text-primary"></i>{{ $information->twitter }}</b></b></p>
-                            <p> <b><i class="ti-instagram mr-2 text-danger"></i>{{ $information->instagram }}</b></b></p>
+                            <p> <b> <i class="ti-facebook mr-2 text-info"></i>{{ $user_info_data->facebook }}</b></p>
+                            <p> <b><i class="ti-twitter mr-2 text-primary"></i>{{ $user_info_data->twitter }}</b></b></p>
+                            <p> <b><i class="ti-instagram mr-2 text-danger"></i>{{ $user_info_data->instagram }}</b></b>
+                            </p>
                         </div>
                     </div>
 
