@@ -15,14 +15,14 @@ class CreateProfilesTable extends Migration
     {
         Schema::create('profiles', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('users_id');
+            $table->unsignedInteger('user_id');
             $table->string('image_path');
             $table->longText('about');
             $table->string('facebook');
             $table->string('twitter');
             $table->string('instagram');
             $table->timestamps();
-            $table->foreign('users_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

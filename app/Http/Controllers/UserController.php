@@ -24,8 +24,6 @@ class UserController extends Controller
     {
         $user = User::where('id', '=', session('LoggedUser'))->first();
 
-        // dd($user);
-
         $books = Book::all();
 
         return view('index', compact('books'))->with('user', $user);
@@ -116,17 +114,10 @@ class UserController extends Controller
     {
 
 
-        $data = User::where('id', '=', session('LoggedUser'))->first();
+        $user = User::where('id', '=', session('LoggedUser'))->first();
 
-        $user_info_data = Profile::where('id', '=', session('LoggedUser'))->first();
 
-        return view(
-            'users.profile',
-            [
-                'data' => $data,
-                'user_info_data' => $user_info_data,
-            ]
-        );
+        return view('users.profile')->with('user', $user);
     }
 
     /**
@@ -172,7 +163,7 @@ class UserController extends Controller
         $request->profile_img->move(public_path('images/profile_pics'), $newImageName);
 
         $profile = Profile::create([
-            'users_id' => $id,
+            'user_id' => $id,
             'image_path' => $newImageName,
             'about' => $request->about,
             'facebook' => $request->facebook,

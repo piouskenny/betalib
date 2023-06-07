@@ -1,7 +1,10 @@
 @extends('layout.app')
 
 @section('content')
-    @if (!$user_info_data)
+    @php
+        dd($user->profile);
+    @endphp
+    {{-- @if (!$user_info_data)
         @php
             class Details
             {
@@ -14,16 +17,18 @@
             
             $user_info_data = new Details();
         @endphp
-    @endif
+    @endif --}}
 
     <!-- content -->
+
+    {{-- 
     <div class="main-panel">
         <div class="content-wrapper">
             <div class="row">
                 <div class="hero_profile">
                     <div class="profile_image">
 
-                        <img src="{{ asset('images/profile_pics/' . $user_info_data->image_path) }}"
+                        <img src="{{ asset('images/profile_pics/' . $user->profile->image_path) }}"
                             class="img_profile border border-light border-5" alt="">
 
                         <h1 class="text-light h4 mt-5 mx-3">{{ $user_info_data->firstname }} {{ $user_info_data->lastname }}
@@ -71,5 +76,5 @@
         </div>
     </div>
     </div>
-    </div>
+    </div> --}}
 @endsection
