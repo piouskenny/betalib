@@ -25,9 +25,15 @@
             </ul>
             <ul class="navbar-nav navbar-nav-right">
                 <li class="nav-item nav-profile dropdown">
+                    @php
+                        if (!$user->profile) {
+                            $image_path = '';
+                        } else {
+                            $image_path = $user->profile->image_path;
+                        }
+                    @endphp
                     <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
-                        <img src="{{ asset('images/profile_pics/' . $user->profile->image_path ?? '') }}"
-                            alt="profile" />
+                        <img src="{{ asset('images/profile_pics/' . $image_path) }}" alt="profile" />
                     </a>
                     <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
                         <a class="dropdown-item" href="{{ route('logout') }}">
