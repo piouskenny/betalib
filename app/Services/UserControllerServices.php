@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Profile;
+use App\Models\Review;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 
@@ -41,6 +42,16 @@ class UserControllerServices
             'facebook' => $request->facebook,
             'twitter' => $request->twitter,
             'instagram' => $request->instagram,
+        ]);
+    }
+
+    public function upload_review($request)
+    {
+        Review::create([
+            'book_id' => $request->book_id,
+            'author' => $request->book_author,
+            'user_id' => $request->user_id,
+            'review' => $request->review,
         ]);
     }
 }

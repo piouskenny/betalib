@@ -200,13 +200,8 @@ class UserController extends Controller
                 'review' => 'required',
             ],
         );
-
-        Review::create([
-            'book_id' => $request->book_id,
-            'author' => $request->book_author,
-            'user_id' => $request->user_id,
-            'review' => $request->review,
-        ]);
+        $this->UserControllerServices = new UserControllerServices;
+        $this->UserControllerServices->upload_review($request);
 
         return back()->with("success", "Review Uploaded Successfully go back to check your review");
     }
