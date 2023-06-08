@@ -76,7 +76,7 @@ class UserController extends Controller
         $this->UserControllerServices = new  UserControllerServices;
         $user =  $this->UserControllerServices->loginUser($request);
 
-        
+
 
         if ($user) {
             if (Hash::check($request->password, $user->password)) {
@@ -112,17 +112,6 @@ class UserController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function updateProfile()
-    {
-        if (!session()->has('LoggedUser')) {
-            return redirect('login');
-        } elseif (session()->has('LoggedUser')) {
-            $user = User::where('id', '=', session('LoggedUser'))->first();
-            $data = ['LoggedUserInfo' => $user,];
-        }
-
-        return view('users.update_profile', $data);
-    }
 
     /**
      * Update the specified resource in storage.
