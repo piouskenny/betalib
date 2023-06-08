@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UserCheckRequest;
 use App\Http\Requests\UserSignupRequest;
 use App\Models\User;
 use App\Models\Profile;
@@ -66,21 +67,16 @@ class UserController extends Controller
         $this->UserControllerServices->signupUser($request);
 
         return redirect('/login')->with('success', 'create account successfully');
-
-        // dd(Hash::make($request->password));
-        // dd($request->all());
     }
 
 
-    public function check(Request $request)
+    public function check(UserCheckRequest $request)
     {
-        $request->validate([
-            'email' => 'required|email',
-            'password' => 'required|min:7|'
-        ]);
+        $request->validated();
+        $this->UserControllerServices = new  UserControllerServices;
+        $user =  $this->UserControllerServices->loginUser($request);
 
-        $user = User::where('email', '=', $request->email)->first();
-
+        
 
         if ($user) {
             if (Hash::check($request->password, $user->password)) {

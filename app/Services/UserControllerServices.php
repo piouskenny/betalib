@@ -18,4 +18,10 @@ class UserControllerServices
             'password' => Hash::make($request->password)
         ]);
     }
+
+    public function loginUser($request)
+    {
+        $user = User::where('email', '=', $request->email)->first();
+        return $user;
+    }
 }
