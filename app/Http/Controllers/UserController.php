@@ -159,12 +159,21 @@ class UserController extends Controller
     {
         $user = User::where('id', '=', session('LoggedUser'))->first();
 
-        $book_info = Book::all()->where('id', '=', $id);
+        $book = Book::where('id', '=', $id)->first();
 
-        $review = Review::all()->where('book_id', $id);
+        $reviews = Review::all()->where('book_id', $id);
 
-        return view("users.description", compact('book_info', 'review'))->with('user', $user);
+        return view(
+            "users.description",
+            [
+                'user' => $user,
+                'book' => $book
+            ],
+            compact('reviews')
+        );
     }
+
+
 
     public function add_review($id)
     {
