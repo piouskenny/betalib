@@ -34,24 +34,41 @@
 
 
                     @forelse ($reviews as $review)
-                        <div class="shadow my-3">
-                            <p>
+                        <div class="shadow my-3 pb-4">
+
+                            <p class="pt-4">
                                 @php
                                     echo htmlspecialchars_decode($review['review']);
                                 @endphp
                             </p>
+
+                            <p class="h5">BY:
+                                @if ($review->user->username === $user->username)
+                                    Me
+                                @else
+                                    {{ $review->user->username }}
+                                @endif
+                            </p>
+
                         </div>
                     @empty
                         <div class="alert alert-danger my-5 w-100 text-center">
                             NO REVIEW ADDED FOR THIS BOOK YET
                         </div>
-
-                  
                     @endforelse
 
-                    <a href="{{ route('add_review', $book->id) }}" class="btn btn-primary">
-                        Add your Own Review
-                    </a>
+                    {{ $reviews->links() }}
+
+                    @if ($user->review)
+                        <p class="alert-warning">
+                            You've added your own review
+                        </p>
+                    @else
+                        <a href="{{ route('add_review', $book->id) }}" class="btn btn-primary">
+                            Add your Own Review
+                        </a>
+                    @endif
+
 
                 </div>
             </div>

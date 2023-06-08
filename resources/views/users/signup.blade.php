@@ -15,7 +15,7 @@
                             @method('post')
 
                             <div class="form-group">
-                                <input type="text" class="form-control form-control-sm" id="exampleInputUsername1"
+                                <input type="text" class="form-control form-control-sm" id="exampleInputUsername1" 
                                     placeholder="Username" name="username" value="{{ old('username') }}">
                                 <span class="text-danger my-2">
                                     @error('username')

@@ -7,11 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Review extends Model
 {
-    protected $fillable = ['book_title', 'author', 'user_id', 'user_username', 'review'];
+    protected $fillable = ['book_id', 'author', 'user_id', 'review'];
     use HasFactory;
 
-
-    public function users()
+    public function user()
     {
         return $this->belongsTo(User::class);
     }

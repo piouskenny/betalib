@@ -161,7 +161,7 @@ class UserController extends Controller
 
         $book = Book::where('id', '=', $id)->first();
 
-        $reviews = Review::all()->where('book_id', $id);
+        $reviews = Review::where('book_id', $id)->paginate(5);
 
         return view(
             "users.description",
@@ -177,41 +177,34 @@ class UserController extends Controller
 
     public function add_review($id)
     {
-        if (!session()->has('LoggedUser')) {
-            return redirect('login');
-        } elseif (session()->has('LoggedUser')) {
-            $user = User::where('id', '=', session('LoggedUser'))->first();
-            $data = ['LoggedUserInfo' => $user,];
-        }
+
+        $user = User::where('id', '=', session('LoggedUser'))->first();
+
+        $book = Book::where('id', '=', $id)->first();
 
 
-        $user_info_all = User::all()->where('id', '=', session('LoggedUser'));
-
-        // $user_info = ['info' => $user_info_all];
-
-        $book = Book::all()->where('id', '=', $id);
-
-        // $book_info = ['bookInfo' => $book];
-
-        return view("users.add_review", $data, compact('user_info_all', 'book'));
+        return view(
+            "users.add_review",
+            [
+                'user' => $user,
+                'book' => $book,
+            ]
+        );
     }
 
     public function upload_review(Request $request)
     {
-        // dd($request->all());
+
         $request->validate(
             [
-                'review' => 'required|string',
-                'user_id' => 'unique:reviews',
-                'user_username' => 'unique:reviews'
+                'review' => 'required',
             ],
         );
 
-        $review = Review::create([
-            'book_title' => $request->book_title,
+        Review::create([
+            'book_id' => $request->book_id,
             'author' => $request->book_author,
             'user_id' => $request->user_id,
-            'user_username' => $request->username,
             'review' => $request->review,
         ]);
 

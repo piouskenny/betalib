@@ -18,38 +18,31 @@
                             </div>
                         @endif
                     </div>
+
                     <form action="{{ route('upload_review') }}" method="post">
                         <span class="text-danger my-2">
                             @error('user_id')
                                 {{ $message }}
                             @enderror
                         </span>
+
                         @csrf
                         @method('post')
-                        @forelse ($user_info_all as $one)
-                            <div class="form-group my-5">
-                                <input type="text" hidden name="username" id="" class="form-control"
-                                    value="{{ $one->username }}">
-                            </div>
-                            <div class="form-group my-5">
-                                <input type="number" hidden name="user_id" id="" class="form-control"
-                                    value="{{ $one->id }}">
-                            </div>
-                        @empty
-                        @endforelse
+                        <div class="form-group my-5">
+                            <input type="number" hidden name="user_id" id="" class="form-control"
+                                value="{{ $user->id }}">
+                        </div>
+
                         <div class="form-group mt-5">
                             <div class="row">
-                                @forelse ($book as $one)
-                                    <div class="col-6">
-                                        <input type="text" hidden name="book_author" id="" class="form-control"
-                                            value="{{ $one->book_author }}">
-                                    </div>
-                                    <div class="col-6">
-                                        <input type="text" hidden name="book_title" id="" class="form-control"
-                                            value="{{ $one->book_title }}">
-                                    </div>
-                                @empty
-                                @endforelse
+                                <div class="col-6">
+                                    <input type="text" hidden name="book_id" id="" class="form-control"
+                                        value="{{ $book->id }}">
+                                </div>
+                                <div class="col-6">
+                                    <input type="text" hidden name="book_author" id="" class="form-control"
+                                        value="{{ $book->book_author }}">
+                                </div>
                             </div>
                         </div>
                         <div class="form-group">
