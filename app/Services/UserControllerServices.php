@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Profile;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 
@@ -23,5 +24,23 @@ class UserControllerServices
     {
         $user = User::where('email', '=', $request->email)->first();
         return $user;
+    }
+
+
+
+    public function UpdateUserProfile($request, $id)
+    {
+        $newImageName = time() . '-' . $request->instagram . '.' . $request->profile_img->extension();
+
+        $request->profile_img->move(public_path('images/profile_pics'), $newImageName);
+
+        Profile::create([
+            'user_id' => $id,
+            'image_path' => $newImageName,
+            'about' => $request->about,
+            'facebook' => $request->facebook,
+            'twitter' => $request->twitter,
+            'instagram' => $request->instagram,
+        ]);
     }
 }

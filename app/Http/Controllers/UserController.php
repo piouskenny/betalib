@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdateProfileRequest;
 use App\Http\Requests\UserCheckRequest;
 use App\Http\Requests\UserSignupRequest;
 use App\Models\User;
@@ -120,31 +121,16 @@ class UserController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update_profile_details(Request $request, User $user)
+    public function update_profile_details(UpdateProfileRequest $request, User $user)
     {
         $id = session('LoggedUser');
 
-        $request->validate([
-            "profile_img" => 'mimes:jpg,png,jpeg|max:4000',
-            "about" => 'unique:profiles',
-            "facebook" => 'unique:profiles',
-            "twitter" => 'unique:profiles',
-            "instagram" => 'unique:profiles',
-        ]);
+        $request->validated();
 
 
-        $newImageName = time() . '-' . $request->instagram . '.' . $request->profile_img->extension();
+        $this->UserControllerServices = new UserControllerServices;
 
-        $request->profile_img->move(public_path('images/profile_pics'), $newImageName);
-
-        $profile = Profile::create([
-            'user_id' => $id,
-            'image_path' => $newImageName,
-            'about' => $request->about,
-            'facebook' => $request->facebook,
-            'twitter' => $request->twitter,
-            'instagram' => $request->instagram,
-        ]);
+        $this->UserControllerServices->UpdateUserProfile($request, $id);
 
         return redirect('/profile');
     }
