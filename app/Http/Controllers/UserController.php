@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Storage;
+use App\Services\UserControllerServices;
 
 class UserController extends Controller
 {
@@ -21,6 +22,10 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+
+    public  $UserControllerServices;
+
     public function index()
     {
         $user = User::where('id', '=', session('LoggedUser'))->first();
@@ -57,15 +62,8 @@ class UserController extends Controller
     {
         $request->validated();
 
-        $user = User::create([
-            'username' => $request->username,
-            'firstname' => $request->firstname,
-            'lastname' => $request->lastname,
-            'email' => $request->email,
-            'country' => $request->country,
-            'password' => Hash::make($request->password)
-        ]);
-
+        $this->UserControllerServices = new UserControllerServices;
+        $this->UserControllerServices->signupUser($request);
 
         return redirect('/login')->with('success', 'create account successfully');
 
