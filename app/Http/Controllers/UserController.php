@@ -19,12 +19,6 @@ use App\Services\UserControllerServices;
 
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-
 
     public  $UserControllerServices;
 
@@ -37,11 +31,6 @@ class UserController extends Controller
         return view('index', compact('books'))->with('user', $user);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         return view('users.signup');
@@ -53,17 +42,9 @@ class UserController extends Controller
         return view('users.login');
     }
 
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(UserSignupRequest $request)
     {
         $request->validated();
-
         $this->UserControllerServices = new UserControllerServices;
         $this->UserControllerServices->signupUser($request);
 
@@ -91,12 +72,7 @@ class UserController extends Controller
             return back()->with('failed', 'No Account Found for ' . $request->email);
         }
     }
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
+
     public function profile()
     {
 
@@ -107,20 +83,7 @@ class UserController extends Controller
         return view('users.profile')->with('user', $user);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
     public function update_profile_details(UpdateProfileRequest $request, User $user)
     {
         $id = session('LoggedUser');
@@ -224,12 +187,7 @@ class UserController extends Controller
         return Response::download($file_path, $title . ".pdf", ['Content-Type: Document/pdf']);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
+
     public function logout()
     {
         if (session()->has('LoggedUser')) {
