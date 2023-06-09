@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AdminLoginRequest;
 use App\Models\Admin;
 use App\Models\User;
 use App\Models\Book;
@@ -92,7 +93,7 @@ class AdminController extends Controller
 
         return redirect('/bl-admin/add_book')->with('success', 'Book Added Successfully');
     }
-    
+
     /**
      * Show the form for creating a new resource.
      *
@@ -139,28 +140,18 @@ class AdminController extends Controller
      * @param  \App\Models\Admin  $admin
      * @return \Illuminate\Http\Response
      */
-    public function check(Request $request)
+    public function check(AdminLoginRequest $request)
     {
-        
-        $request->validate([
-            'username' => 'required',
-            'password' => 'required|min:7|'
-        ]);
+        $request->validated();
 
         $admin = Admin::where('username', '=', $request->username)->first();
 
 
-        if ($admin) {
-            if (Hash::check($request->password, $admin->password)) {
-                $request->session()->put('LoggedUser', $admin->id);
-                return redirect('/bl-admin');
-            } else {
-                return back()->with('failed', 'wrong Password');
-            }
-        } else {
-            return back()->with('failed', 'You are not admin' . $request->username);
-        }
+        $this->adminControllerService  = new AdminControllerService;
+        $this->adminControllerService->AdminLoginCheck($admin, $request);
     }
+
+    
     /**
      * Show the form for editing the specified resource.
      *
@@ -204,7 +195,7 @@ class AdminController extends Controller
         ]);
 
         return back()->with('success', 'Book File added successfully');
-        
+
         // dd($filename, $request->book_id, $request->book_title, $filesize);
     }
 
