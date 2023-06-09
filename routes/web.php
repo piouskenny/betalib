@@ -39,11 +39,11 @@ Route::post('/upload_review', [UserController::class, 'upload_review'])->name('u
 
 // Admin View and functionality
 
-Route::get('/bl-admin', [AdminController::class, 'index'])->name('bl-admin_index');
-
 Route::get('bl-admin/signup', [AdminController::class, 'create'])->name('bl-admin_signup');
 
 Route::get('bl-admin/login', [AdminController::class, 'login'])->name('bl-admin_login');
+
+Route::get('/bl-admin', [AdminController::class, 'index'])->name('bl-admin_index');
 
 Route::post('bl-admin/store', [AdminController::class, 'store'])->name('bl-admin_store');
 

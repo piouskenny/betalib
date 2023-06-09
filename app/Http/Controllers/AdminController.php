@@ -8,9 +8,14 @@ use App\Models\Book;
 use App\Models\BookFile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use App\Services\AdminControllerService;
+
 
 class AdminController extends Controller
 {
+    public $adminControllerService;
+
+    
     /**
      * Display a listing of the resource.
      *
