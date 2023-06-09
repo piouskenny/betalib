@@ -31,11 +31,14 @@ class AdminController extends Controller
 
         $books = Book::all()->count('book_title');
 
-        return view('admin.index', [
-            'admin' => $admin,
-            'users' => $users,
-            'books' => $books
-        ]);
+        return view(
+            'admin.index',
+            [
+                'admin' => $admin,
+                'users' => $users,
+                'books' => $books
+            ]
+        );
     }
 
     public function add_book()
