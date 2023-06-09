@@ -24,18 +24,18 @@ class AdminController extends Controller
      */
     public function index()
     {
-        if (!session()->has('LoggedUser')) {
-            return redirect('/bl-admin/login');
-        } elseif (session()->has('LoggedUser')) {
-            $user = Admin::where('id', '=', session('LoggedUser'))->first();
-            $data = ['LoggedUserInfo' => $user,];
-        }
+
+        $admin = Admin::where('id', '=', session('LoggedUser'))->first();
 
         $users = User::all()->count('username');
 
-        $book = Book::all()->count('book_title');
+        $books = Book::all()->count('book_title');
 
-        return view('admin.index', $data, compact('users', 'book'));
+        return view('admin.index', [
+            'admin' => $admin,
+            'users' => $users,
+            'books' => $books
+        ]);
     }
 
     public function add_book()
@@ -148,6 +148,8 @@ class AdminController extends Controller
 
         $this->adminControllerService = new AdminControllerServices;
         $this->adminControllerService->AdminLoginCheck($admin, $request);
+
+        return redirect('/bl-admin');
     }
 
 
