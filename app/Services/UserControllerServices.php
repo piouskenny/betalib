@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Hash;
 
 class UserControllerServices
 {
+
+
     public function signupUser($request)
     {
         $user = User::create([

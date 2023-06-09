@@ -10,7 +10,7 @@ use App\Models\BookFile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Services\AdminControllerService;
-
+use App\Services\AdminControllerServices;
 
 class AdminController extends Controller
 {
@@ -146,12 +146,11 @@ class AdminController extends Controller
 
         $admin = Admin::where('username', '=', $request->username)->first();
 
-
-        $this->adminControllerService  = new AdminControllerService;
+        $this->adminControllerService = new AdminControllerServices;
         $this->adminControllerService->AdminLoginCheck($admin, $request);
     }
 
-    
+
     /**
      * Show the form for editing the specified resource.
      *

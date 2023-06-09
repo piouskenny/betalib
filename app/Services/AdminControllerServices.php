@@ -4,10 +4,12 @@ namespace App\Services;
 
 use Illuminate\Support\Facades\Hash;
 
-class AdminControllerService
+class AdminControllerServices
 {
+
     public function AdminLoginCheck($admin, $request)
     {
+        dd($request);
         if ($admin) {
             if (Hash::check($request->password, $admin->password)) {
                 $request->session()->put('LoggedUser', $admin->id);
