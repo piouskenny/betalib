@@ -39,9 +39,7 @@ class AdminController extends Controller
 
     public function add_book()
     {
-
         $admin = Admin::where('id', '=', session('LoggedUser'))->first();
-
 
         return view('admin.add_book')->with('admin', $admin);
     }
@@ -50,17 +48,19 @@ class AdminController extends Controller
 
     public function all_books()
     {
-        if (!session()->has('LoggedUser')) {
-            return redirect('/bl-admin/login');
-        } elseif (session()->has('LoggedUser')) {
-            $user = Admin::where('id', '=', session('LoggedUser'))->first();
-            $data = ['LoggedUserInfo' => $user,];
-        }
+
+        $admin = Admin::where('id', '=', session('LoggedUser'))->first();
 
 
         $all_books = Book::all();
 
-        return view('admin.all_books', $data, compact('all_books'));
+        return view(
+            'admin.all_books',
+            [
+                'admin' => $admin,
+                'all_books' => $all_books
+            ]
+        );
     }
 
     public function store_book(Request $request)
