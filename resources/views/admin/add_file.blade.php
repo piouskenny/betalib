@@ -21,7 +21,6 @@
                                 {{ Session::get('success') }}
                             </div>
                         @endif
-
                         @if (Session::get('failed'))
                             <div class="alert alert-danger">
                                 {{ Session::get('failed') }}
@@ -32,23 +31,20 @@
                         @csrf
                         @method('post')
 
-                        @forelse ($book as $one)
-                            <div class="form-group my-3">
-                                <input type="text" name="book_id" id="" value="{{ $one['id'] }}" hidden
-                                    class="form-control">
-                            </div>
+                        <div class="form-group my-3">
+                            <input type="text" name="book_id" id="" value="{{ $book->id }}" hidden
+                                class="form-control">
+                        </div>
 
-                            <div class="form-group my-3">
-                                <input type="text" name="book_title" id="" value="{{ $one['book_title'] }}"
-                                    hidden class="form-control">
-                            </div>
+                        <div class="form-group my-3">
+                            <input type="text" name="book_title" id="" value="{{ $book->book_title }}" hidden
+                                class="form-control">
+                        </div>
 
-                            <div class="input-group mt-2 mb-3">
-                                <input type="file" name="book_file" class="form-control" id="">
-                            </div>
+                        <div class="input-group mt-2 mb-3">
+                            <input type="file" name="book_file" class="form-control" id="">
+                        </div>
 
-                        @empty
-                        @endforelse
 
                         <div class="form-group d-flex justify-content-center">
                             <button type="submit" class="btn btn-primary w-50">Add Book File</button>

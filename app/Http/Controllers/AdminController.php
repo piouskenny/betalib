@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\AdminLoginRequest;
+use App\Http\Requests\AdminStoreRequest;
+use App\Http\Requests\storeBookRequest;
 use App\Models\Admin;
 use App\Models\User;
 use App\Models\Book;
@@ -16,12 +18,6 @@ class AdminController extends Controller
 {
     public $adminControllerService;
 
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $this->adminControllerService = new AdminControllerServices;
@@ -40,7 +36,6 @@ class AdminController extends Controller
     public function add_book()
     {
         $admin = Admin::where('id', '=', session('LoggedUser'))->first();
-
         return view('admin.add_book')->with('admin', $admin);
     }
 
@@ -62,79 +57,39 @@ class AdminController extends Controller
         );
     }
 
-    public function store_book(Request $request)
+    public function store_book(storeBookRequest $request)
     {
 
-        $request->validate([
-            'book_title' => 'required',
-            'book_author' => 'required|string',
-            'book_cover' => 'required|mimes:jpg,png,jpeg|max:4000',
-            'date_written' => 'required',
-            'description' => 'required',
-        ]);
+        $request->validated();
 
-        $bookCoverName = time() . '-' . $request->book_title . '.' . $request->book_cover->extension();
-
-        $request->book_cover->move(public_path('book_cover'), $bookCoverName);
-
-
-        $book = Book::create([
-            'book_title' => $request->book_title,
-            'book_author' => $request->book_author,
-            'book_cover' => $bookCoverName,
-            'date_written' => $request->date_written,
-            'description' => $request->description,
-        ]);
+        $this->adminControllerService = new AdminControllerServices;
+        $this->adminControllerService->store_book_service($request);
 
         return redirect('/bl-admin/add_book')->with('success', 'Book Added Successfully');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         return view('admin.signup');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function login()
     {
         return view('admin.login');
     }
 
 
-    public function store(Request $request)
+    public function store(AdminStoreRequest $request)
     {
-        $request->validate([
-            'username' => 'required|string|unique:admins',
-            'email' => 'required|email|unique:admins',
-            'password' => 'required|min:7|'
-        ]);
-
-        $admin = Admin::create([
-            'username' => $request->username,
-            'email' => $request->email,
-            'password' => Hash::make($request->password)
-        ]);
+        $request->validated();
+        $this->adminControllerService = new AdminControllerServices;
+        $this->adminControllerService->store_service($request);
 
         return redirect('/bl-admin/login')->with('success', 'create account successfully');
     }
 
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Admin  $admin
-     * @return \Illuminate\Http\Response
-     */
     public function check(AdminLoginRequest $request)
     {
         $request->validated();
@@ -148,26 +103,20 @@ class AdminController extends Controller
     }
 
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Admin  $admin
-     * @return \Illuminate\Http\Response
-     */
     public function add_file($id)
     {
 
-        if (!session()->has('LoggedUser')) {
-            return redirect('/bl-admin/login');
-        } elseif (session()->has('LoggedUser')) {
-            $user = Admin::where('id', '=', session('LoggedUser'))->first();
-            $data = ['LoggedUserInfo' => $user,];
-        }
+        $admin = Admin::where('id', '=', session('LoggedUser'))->first();
 
-        $book = Book::all()->where('id', '=', $id);
+        $book = Book::where('id', '=', $id)->first();
 
-        // dd($book['id']);
-        return view("admin.add_file", $data, compact('book'));
+        return view(
+            "admin.add_file",
+            [
+                'admin' => $admin,
+                'book' => $book
+            ]
+        );
     }
 
     public function store_file(Request $request)
@@ -176,42 +125,10 @@ class AdminController extends Controller
             "book_file" => 'mimes:docx,pdf,epud|required',
         ]);
 
-
-        $filename = time() . '-' . $request->book_title . '.' . $request->book_file->extension();
-        $file_info = $request->book_file->getSize() / 1000000;
-        $filesize = round($file_info, 1) . " MB";
-
-        $request->book_file->move(public_path('books/'), $filename);
-
-        $book_file = BookFile::create([
-            'book_id' => $request->book_id,
-            'book_title' => $request->book_title,
-            'book_file' => $filename,
-            'book_size' => $filesize,
-        ]);
+        $this->adminControllerService = new AdminControllerServices;
+        $this->adminControllerService->store_file_service($request);
 
         return back()->with('success', 'Book File added successfully');
-
-        // dd($filename, $request->book_id, $request->book_title, $filesize);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Admin  $admin
-     * @return \Illuminate\Http\Response
-     */
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Admin  $admin
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Admin $admin)
-    {
-        //
     }
 
     public function logout()
