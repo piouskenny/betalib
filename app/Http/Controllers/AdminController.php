@@ -15,7 +15,7 @@ class AdminController extends Controller
 {
     public $adminControllerService;
 
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -141,6 +141,7 @@ class AdminController extends Controller
      */
     public function check(Request $request)
     {
+        
         $request->validate([
             'username' => 'required',
             'password' => 'required|min:7|'
