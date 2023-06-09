@@ -24,33 +24,26 @@ class AdminController extends Controller
      */
     public function index()
     {
-
-        $admin = Admin::where('id', '=', session('LoggedUser'))->first();
-
-        $users = User::all()->count('username');
-
-        $books = Book::all()->count('book_title');
+        $this->adminControllerService = new AdminControllerServices;
+        $output =  $this->adminControllerService->indexService();
 
         return view(
             'admin.index',
             [
-                'admin' => $admin,
-                'users' => $users,
-                'books' => $books
+                'admin' => $output[0],
+                'users' => $output[1],
+                'books' => $output[2]
             ]
         );
     }
 
     public function add_book()
     {
-        if (!session()->has('LoggedUser')) {
-            return redirect('/bl-admin/login');
-        } elseif (session()->has('LoggedUser')) {
-            $user = Admin::where('id', '=', session('LoggedUser'))->first();
-            $data = ['LoggedUserInfo' => $user,];
-        }
 
-        return view('admin.add_book', $data);
+        $admin = Admin::where('id', '=', session('LoggedUser'))->first();
+
+
+        return view('admin.add_book')->with('admin', $admin);
     }
 
 

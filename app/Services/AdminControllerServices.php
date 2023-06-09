@@ -2,6 +2,9 @@
 
 namespace App\Services;
 
+use App\Models\Admin;
+use App\Models\Book;
+use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 
 class AdminControllerServices
@@ -17,5 +20,20 @@ class AdminControllerServices
         } else {
             return back()->with('failed', 'You are not admin' . $request->username);
         }
+    }
+
+    public function indexService()
+    {
+        $output = [];
+
+        $admin = Admin::where('id', '=', session('LoggedUser'))->first();
+
+        $users = User::all()->count('username');
+
+        $books = Book::all()->count('book_title');
+
+        $output = [$admin, $users, $books];
+
+        return $output;
     }
 }
