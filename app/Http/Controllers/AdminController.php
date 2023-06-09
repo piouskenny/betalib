@@ -51,7 +51,6 @@ class AdminController extends Controller
 
         $admin = Admin::where('id', '=', session('LoggedUser'))->first();
 
-
         $all_books = Book::all();
 
         return view(
